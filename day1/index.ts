@@ -97,7 +97,6 @@ class Position {
 
 const initialPosition = new Position(new Coordinates(0, 0), Direction.N);
 const readFileObservable = Observable.bindNodeCallback(readFile);
-const visitedPositions = new Array();
 
 //const data = Observable.of('R2, L3')
 //const data = Observable.of('R2, R2, R2')
