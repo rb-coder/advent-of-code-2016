@@ -56,28 +56,32 @@ const applyInstructionToCode = (code: number[][], instruction: string, keypad: s
 //UUUUD`)
 
 const data: Observable<string> = readFileObservable('./day2/input.txt')
-    .map((fileContent: Buffer) => fileContent.toString())
+    .map((fileContent: Buffer) => fileContent.toString());
+
+const preparedData: Observable<any> = data    
     .map((instructions: string) => instructions.replace(/[^URDL]+/ig, '#'))
     .map((instructions: string) => instructions.split(''))
     .flatMap((instructions: string[]) => Observable.from(instructions));
 
-data
+const result1: Observable<string> = preparedData
     .reduce((code: number[][], instruction: string, index: number) => {
         return applyInstructionToCode(code, instruction, keypad1);
     }, [[1, 1]])
     .flatMap((code: number[][]) => Observable.from(code))
     .map((position: number[]) => keypad1[position[0]][position[1]])
     .reduce((code: string, digit: string, index: number) => code + digit, '')
-    .map((code: string) => 'Part one response: ' + code)
-    .subscribe(console.log);
+    .map((code: string) => 'Part one response: ' + code);
 
-data
+const result2: Observable<string> = preparedData
     .reduce((code: number[][], instruction: string, index: number) => {
         return applyInstructionToCode(code, instruction, keypad2);
     }, [[3, 0]])
     .flatMap((code: number[][]) => Observable.from(code))
     .map((position: number[]) => keypad2[position[0]][position[1]])
     .reduce((code: string, digit: string, index: number) => code + digit, '')
-    .map((code: string) => 'Part two response: ' + code)
+    .map((code: string) => 'Part two response: ' + code);
+
+Observable
+    .concat(result1, result2)
     .subscribe(console.log);
     

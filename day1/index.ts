@@ -104,20 +104,21 @@ const readFileObservable = Observable.bindNodeCallback(readFile);
 //const data = Observable.of('R8, R4, R4, R8')
 
 
-const data = readFileObservable('./day1/input.txt')
-    .map((fileContent: Buffer) => fileContent.toString())
+const data: Observable<string> = readFileObservable('./day1/input.txt')
+    .map((fileContent: Buffer) => fileContent.toString());
+
+const preparedData: Observable<any> = data
     .map((fileContent: string) => fileContent.split(','))
     .flatMap((instructions: string[]) => Observable.from(instructions))
     .map((instruction: string) => instruction.trim())
     .map((instruction: string) => new Instruction(instruction));
 
-data
+const result1: Observable<string> = preparedData
     .reduce(Position.update, initialPosition)
     .map((position: Position) => Position.distance(initialPosition, position))
-    .map((distance: number) => 'Part one response: ' + distance)
-    .subscribe(console.log);
+    .map((distance: number) => 'Part one response: ' + distance);
 
-data
+const result2: Observable<string> = preparedData
     .mergeScan((position: Position, instruction: Instruction) => {
         return Observable.from(Position.locationsTravelled(position, instruction));
     }, initialPosition)
@@ -142,5 +143,8 @@ data
     .flatMap((positions: Position[]) => Observable.from(positions))
     .first((position: Position, index: number) => position.visits > 1)
     .map((position: Position) => Position.distance(initialPosition, position))
-    .map((distance: number) => 'Part two response: ' + distance)
+    .map((distance: number) => 'Part two response: ' + distance);
+
+Observable
+    .concat(result1, result2)
     .subscribe(console.log);

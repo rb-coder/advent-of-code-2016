@@ -28,12 +28,11 @@ const preparedData: Observable<any> = data
     .map((dimensions: string) => dimensions.split(/\s+/ig))
     .map((dimensions: string[]) => dimensions.map((dimension: string) => parseInt(dimension, 10)));
 
-preparedData
+const result1: Observable<string> = preparedData
     .count(areValidTriangleDimensions)
-    .map((count: number) => 'Part one response: ' + count)
-    .subscribe(console.log);    
+    .map((count: number) => 'Part one response: ' + count);    
 
-preparedData
+const result2: Observable<string> = preparedData
     .bufferCount(3)
     .map((triangleDimensions: number[][]) => 
         triangleDimensions[0]
@@ -41,5 +40,8 @@ preparedData
                 triangleDimensions.map((row: number[]) => row[index])))
     .flatMap((triangleDimensions: number[][]) => Observable.from(triangleDimensions))
     .count(areValidTriangleDimensions)
-    .map((count: number) => 'Part two response: ' + count)
+    .map((count: number) => 'Part two response: ' + count);
+
+Observable
+    .concat(result1, result2)
     .subscribe(console.log);
