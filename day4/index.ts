@@ -62,7 +62,7 @@ not-a-real-room-404[oarel]
 totally-real-room-200[decoy]`);
 */
 
-const data: Observable<any> = readFileObservable('./day4/input.txt')
+const data: Observable<any> = readFileObservable(`${__dirname}/input.txt`)
     .map((fileContent: Buffer) => fileContent.toString());
 
 const preparedData: Observable<any> = data

@@ -20,7 +20,7 @@ vrdear
 dvrsen
 enarar`);
 */
-const data: Observable<any> = readFileObservable('./day6/input.txt')
+const data: Observable<any> = readFileObservable(`${__dirname}/input.txt`)
     .map((fileContent: Buffer) => fileContent.toString());
 
 data

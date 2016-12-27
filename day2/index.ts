@@ -55,7 +55,7 @@ const applyInstructionToCode = (code: number[][], instruction: string, keypad: s
 //LURDL
 //UUUUD`)
 
-const data: Observable<string> = readFileObservable('./day2/input.txt')
+const data: Observable<string> = readFileObservable(`${__dirname}/input.txt`)
     .map((fileContent: Buffer) => fileContent.toString());
 
 const preparedData: Observable<any> = data    

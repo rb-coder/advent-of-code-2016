@@ -104,7 +104,7 @@ const readFileObservable = Observable.bindNodeCallback(readFile);
 //const data = Observable.of('R8, R4, R4, R8')
 
 
-const data: Observable<string> = readFileObservable('./day1/input.txt')
+const data: Observable<string> = readFileObservable(`${__dirname}/input.txt`)
     .map((fileContent: Buffer) => fileContent.toString());
 
 const preparedData: Observable<any> = data

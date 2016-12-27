@@ -18,7 +18,7 @@ const areValidTriangleDimensions = (dimensions: number[]): boolean => {
 //202 402 602
 //203 403 603`)
 
-const data: Observable<any> = readFileObservable('./day3/input.txt')
+const data: Observable<any> = readFileObservable(`${__dirname}/input.txt`)
     .map((fileContent: Buffer) => fileContent.toString());
 
 const preparedData: Observable<any> = data
